@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>File Scan Result</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+    body {
+        background: #0b0b0b;
+        font-family: "JetBrains Mono", monospace;
+        color: #c7fba5;
+        margin: 0;
+    }
+    .container {
+        width: 85%;
+        margin: 30px auto;
+        background: #131313;
+        border: 1px solid #523874;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 0 22px #523874aa;
+    }
+
+    /* BACK BUTTON */
+    .back-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background: #523874;
+        color: #c7fba5;
+        text-decoration: none;
+        font-weight: bold;
+        border-radius: 8px;
+        transition: 0.2s ease;
+        box-shadow: 0 0 12px #523874aa;
+    }
+    .back-btn:hover {
+        background: #6a46a5;
+        color: white;
+        box-shadow: 0 0 18px #6a46a5ff;
+    }
+
+    h1 { text-align: center; color: #adf182; }
+
+    .section-title {
+        font-size: 20px;
+        color: #916cad;
+        border-bottom: 1px solid #523874;
+        margin-top: 25px;
+        padding-bottom: 5px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 12px;
+    }
+
+    table th, table td {
+        border-bottom: 1px solid #333;
+        padding: 8px 12px;
+        text-align: left;
+    }
+
+    table th {
+        color: #dc7d68;
+    }
+
+    .badge {
+        padding: 10px 20px;
+        display: inline-block;
+        font-size: 20px;
+        margin: 10px auto 20px;
+        border-radius: 10px;
+        font-weight: bold;
+        color: white;
+    }
+
+    .malicious { background:#8b0000; }
+    .suspicious { background:#cc8400; }
+    .clean { background:#0f8b32; }
+
+    .stat-grid {
+        display: flex;
+        gap: 15px;
+        margin-top: 10px;
+    }
+
+    .stat-box {
+        flex: 1;
+        padding: 15px;
+        background: #1a1a1a;
+        text-align: center;
+        border-radius: 10px;
+        border: 1px solid #523874;
+    }
+
+    .stat-num {
+        font-size: 26px;
+        font-weight: bold;
+        color: #adf182;
+    }
+
+    .stat-label {
+        color: #916cad;
+    }
+
+    .result-cell.malicious { color: #ff4d4d; }
+    .result-cell.suspicious { color: #ffae42; }
+    .result-cell.clean { color: #7cff6b; }
+    .result-cell.harmless { color: #999999; }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- 🔥 Back Button -->
+<div style="text-align:left; margin-bottom:10px;">
+    <a href="/" class="back-btn">⬅ Back</a>
+</div>
+
+<h1>File Scan Result</h1>
+
+<!-- BADGE -->
+{% if counts.malicious > 0 %}
+<div class="badge malicious">⚠ MALICIOUS</div>
+{% elif counts.suspicious > 0 %}
+<div class="badge suspicious">⚠ SUSPICIOUS</div>
+{% else %}
+<div class="badge clean">✔ CLEAN</div>
+{% endif %}
+
+<!-- Stats -->
+<div class="stat-grid">
+    <div class="stat-box">
+        <div class="stat-num">{{ counts.malicious }}</div>
+        <div class="stat-label">Malicious</div>
+    </div>
+    <div class="stat-box">
+        <div class="stat-num">{{ counts.suspicious }}</div>
+        <div class="stat-label">Suspicious</div>
+    </div>
+    <div class="stat-box">
+        <div class="stat-num">{{ counts.clean }}</div>
+        <div class="stat-label">Clean</div>
+    </div>
+    <div class="stat-box">
+        <div class="stat-num">{{ counts.harmless }}</div>
+        <div class="stat-label">Harmless</div>
+    </div>
+</div>
+
+<!-- HASH VALUES -->
+<h2 class="section-title">Hash Values</h2>
+<p><strong>MD5:</strong> {{ hashes.md5 }}</p>
+<p><strong>SHA256:</strong> {{ hashes.sha256 }}</p>
+
+<!-- CUSTOM LEGEND -->
+<div style="text-align:center; margin-top:20px; margin-bottom:10px; font-size:14px;">
+    <span style="margin-right:12px;">🟦 Malicious</span>
+    <span style="margin-right:12px;">🟥 Suspicious</span>
+    <span style="margin-right:12px;">🟧 Clean</span>
+    <span>🟨 Harmless</span>
+</div>
+
+<!-- PIE CHART -->
+<h2 class="section-title">Detection Summary</h2>
+
+<div style="width:230px; height:230px; margin: 0 auto;">
+    <canvas id="pieChart"></canvas>
+</div>
+
+<script>
+// Read values
+let mal = Number({{ counts.malicious|default(0) }});
+let sus = Number({{ counts.suspicious|default(0) }});
+let cle = Number({{ counts.clean|default(0) }});
+let harm = Number({{ counts.harmless|default(0) }});
+
+// Chart fallback
+if (mal === 0 && sus === 0 && cle === 0 && harm === 0) {
+    mal = 1;
+}
+
+new Chart(document.getElementById("pieChart"), {
+    type: "pie",
+    data: {
+        labels: ["Malicious", "Suspicious", "Clean", "Harmless"],
+        datasets: [{
+            backgroundColor: ["#3b82f6", "#ef4444", "#f59e0b", "#eab308"],
+            data: [mal, sus, cle, harm]
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } }
+    }
+});
+</script>
+
+<!-- ENGINE RESULTS -->
+<h2 class="section-title">Engine Results</h2>
+
+{% if vt_result %}
+<table class="engine-table">
+    <thead>
+        <tr>
+            <th>Engine</th>
+            <th>Result</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for engine, data in vt_result.items() %}
+        <tr>
+            <td>{{ data.engine_name }}</td>
+            <td class="result-cell {{ data.result|lower }}">
+                {{ data.result }}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No engine results available.</p>
+{% endif %}
+
+</div>
+</body>
+</html>

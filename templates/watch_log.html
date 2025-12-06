@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Real-Time Watchdog Events</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <h1>Real-Time File Monitoring</h1>
+    <p>Watching folder: <b>watch_folder/</b></p>
+
+    <div id="events" style="white-space:pre; background:#eee; padding:15px;"></div>
+
+    <script>
+        const eventSrc = new EventSource("/stream_events");
+
+        eventSrc.onmessage = function(e) {
+            const events = JSON.parse(e.data);
+            document.getElementById("events").textContent =
+                JSON.stringify(events, null, 2);
+        };
+    </script>
+    
+</body>
+</html>

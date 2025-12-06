@@ -1,0 +1,16 @@
+!DOCTYPE html>
+<html>
+<head>
+    <title>Cybersecurity Threat Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<nav>
+    <a href="{{ url_for('dashboard') }}">Dashboard</a> |
+    <a href="{{ url_for('scan') }}">Manual Scan</a> |
+    <a href="{{ url_for('history') }}">History</a>
+</nav>
+<hr>
+{% block content %}{% endblock %}
+</body>
+</html>

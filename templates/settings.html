@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CSA Settings</title>
+
+<style>
+    body {
+        background:#0b0b0b;
+        font-family:"JetBrains Mono", monospace;
+        color:#c7fba5;
+        margin:0;
+        padding:40px;
+    }
+
+    .container {
+        width:70%;
+        margin:auto;
+        background:#131313;
+        padding:30px;
+        border-radius:12px;
+        border:1px solid #523874;
+        box-shadow:0 0 22px #523874aa;
+    }
+
+    h1 {
+        text-align:center;
+        color:#adf182;
+        margin-bottom:30px;
+        font-size:32px;
+        font-weight:bold;
+    }
+
+    .section-title {
+        margin-top:30px;
+        font-size:20px;
+        color:#916cad;
+        border-bottom:1px solid #523874;
+        padding-bottom:5px;
+    }
+
+    label {
+        font-size:16px;
+        margin-top:12px;
+        color:#d8b4fe;
+        display:block;
+    }
+
+    input[type="text"], textarea, select {
+        width:100%;
+        padding:12px;
+        background:#1c1c1c;
+        border:1px solid #523874;
+        border-radius:10px;
+        color:#c7fba5;
+        margin-top:6px;
+        font-size:15px;
+        outline:none;
+    }
+
+    textarea {
+        height:80px;
+    }
+
+    button {
+        width:100%;
+        margin-top:25px;
+        padding:14px;
+        background:#238636;
+        border:none;
+        font-size:18px;
+        border-radius:10px;
+        font-weight:bold;
+        color:white;
+        cursor:pointer;
+        transition:0.2s;
+    }
+
+    button:hover {
+        background:#2ea043;
+    }
+
+    a {
+        display:block;
+        text-align:center;
+        margin-top:20px;
+        color:#9be2ff;
+        text-decoration:none;
+        font-size:17px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>⚙ System Settings</h1>
+
+<form method="POST" action="/save_settings">
+
+
+    <!-- VIRUSTOTAL -->
+    <h2 class="section-title">VirusTotal API</h2>
+    <label>Your VirusTotal API Key:</label>
+    <input type="text" name="vt_api_key" value="{{ settings.vt_api_key }}" placeholder="Enter API key">
+
+
+    <!-- WATCHDOG FOLDERS -->
+    <h2 class="section-title">Real-Time Protection Folders</h2>
+    <label>Enter up to 3 folders (one per line):</label>
+    <textarea name="watchdog_folders">{{ settings.watchdog_folders }}</textarea>
+
+
+    <!-- NOTIFICATIONS -->
+    <h2 class="section-title">Notifications</h2>
+
+    <label>Enable Discord Notifications:</label>
+    <select name="enable_discord">
+        <option value="yes" {% if settings.enable_discord == 'yes' %}selected{% endif %}>Yes</option>
+        <option value="no" {% if settings.enable_discord == 'no' %}selected{% endif %}>No</option>
+    </select>
+
+    <label>Discord Webhook URL:</label>
+    <input type="text" name="discord_webhook" value="{{ settings.discord_webhook }}">
+
+
+    <label>Enable Telegram Notifications:</label>
+    <select name="enable_telegram">
+        <option value="yes" {% if settings.enable_telegram == 'yes' %}selected{% endif %}>Yes</option>
+        <option value="no" {% if settings.enable_telegram == 'no' %}selected{% endif %}>No</option>
+    </select>
+
+    <label>Telegram Bot Token:</label>
+    <input type="text" name="telegram_bot" value="{{ settings.telegram_bot }}">
+
+    <label>Telegram Chat ID:</label>
+    <input type="text" name="telegram_chat_id" value="{{ settings.telegram_chat_id }}">
+
+
+    <label>Enable Email Alerts:</label>
+    <select name="enable_email">
+        <option value="yes" {% if settings.enable_email == 'yes' %}selected{% endif %}>Yes</option>
+        <option value="no" {% if settings.enable_email == 'no' %}selected{% endif %}>No</option>
+    </select>
+
+    <label>Email Address (receiver):</label>
+    <input type="text" name="email_to" value="{{ settings.email_to }}">
+
+
+    <!-- SYSTEM CONTROL -->
+    <h2 class="section-title">Control Panel</h2>
+    <label>Enable File & URL Scanning:</label>
+    <select name="scanning_enabled">
+        <option value="yes" {% if settings.scanning_enabled == 'yes' %}selected{% endif %}>Enabled</option>
+        <option value="no" {% if settings.scanning_enabled == 'no' %}selected{% endif %}>Disabled</option>
+    </select>
+
+
+    <button type="submit">Save Settings</button>
+
+</form>
+
+<a href="/">⬅ Back to Dashboard</a>
+
+</div>
+
+</body>
+</html>

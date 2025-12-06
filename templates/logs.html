@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>System Logs</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <h1>Threat Analyzer Logs</h1>
+
+    <pre>
+{{ logs | tojson(indent=2) }}
+    </pre>
+
+    <a href="/">Back</a>
+</body>
+</html>

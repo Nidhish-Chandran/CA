@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Live Watchdog Events</h2>
+<ul id="events"></ul>
+
+<script>
+const evtSource = new EventSource("{{ url_for('stream_events') }}");
+
+evtSource.onmessage = function(event) {
+    const data = JSON.parse(event.data);
+
+    const li = document.createElement("li");
+    li.textContent = `${data.timestamp} | ${data.event_type} | ${data.file_path || data.url}`;
+
+    document.getElementById("events").prepend(li);
+};
+</script>
+{% endblock %}
