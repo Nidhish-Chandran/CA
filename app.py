@@ -247,7 +247,7 @@ def upload_file():
         history_db.add_or_update_cache(sha256, "sha256", {"counts":counts,"engines":engines})
         log_event(event_type="manual_file_scan", file_path=path, hashes=hashes, vt_result={})
         notify(event_type="manual_file_scan", file_path=path, hashes=hashes, vt_result={})
-        return render_template("file_result.html", vt_result=engines, counts=counts, hashes=hashes)
+        return render_template("file_results.html", vt_result=engines, counts=counts, hashes=hashes)
 
     stats = raw.get("data", {}).get("attributes", {}).get("last_analysis_stats", {})
     results = raw.get("data", {}).get("attributes", {}).get("last_analysis_results", {})
