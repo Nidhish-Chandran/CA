@@ -1,12 +1,7 @@
 {
     "vt_api_key": "ede2b5f140ae21218912f371bbd98f4e1c351b30c5620ba5f9101da7591e9ac4",
     "watchdog_folders": "C:/Users/User/Desktop/test/",
-    "enable_discord": "yes",
     "discord_webhook": "https://discord.com/api/webhooks/1445820157883584512/HlbXs8nPx04Oipht1HHzorzvDSkn5IKhHGvEjxEr7yUrmB8WUcWUIFEFLg28WJl79qgG",
-    "enable_telegram": "yes",
-    "telegram_bot": "",
-    "telegram_chat_id": "",
-    "enable_email": "yes",
     "email_to": "nidhishchandran24@gmail.com",
     "scanning_enabled": "yes"
 }

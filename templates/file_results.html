@@ -182,7 +182,7 @@ let harm = Number({{ counts.harmless|default(0) }});
 
 // Chart fallback
 if (mal === 0 && sus === 0 && cle === 0 && harm === 0) {
-    mal = 1;
+    harm = 1;
 }
 
 new Chart(document.getElementById("pieChart"), {

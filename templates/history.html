@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Scan History</title>
+<style>
+body { background:#0b0b0b; color:#c7fba5; font-family: monospace; padding:20px; }
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 10px; border-bottom: 1px solid #333; }
+a.btn { padding:6px 12px; background:#238636; color:white; border-radius:6px; text-decoration:none; }
+a.btn:hover { background:#2ea043; }
+</style>
+</head>
+<body>
+
+<h1>Scan History</h1>
+<a href="/" class="btn">← Back to Dashboard</a>
+
+<table>
+<thead>
+<tr>
+    <th>Key</th>
+    <th>Type</th>
+    <th>Date</th>
+    <th>PDF</th>
+</tr>
+</thead>
+<tbody>
+{% for item in items %}
+<tr>
+    <td>{{ item.key }}</td>
+    <td>{{ item.type }}</td>
+    <td>{{ item.date }}</td>
+    <td><a class="btn" href="/download_pdf/{{ item.key }}">Download PDF</a></td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+</body>
+</html>

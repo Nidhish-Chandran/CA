@@ -27,10 +27,27 @@
         color:white;
         transition:0.2s;
     }
-    .settings-btn:hover {
+    .history-btn {
+        position: absolute;
+        top: 75px;
+        
+        right: 30px;
+        background:#238636;
+        padding:10px 18px;
+        border-radius:8px;
+        text-decoration:none;
+        font-weight:bold;
+        color:white;
+        transition:0.2s;
+    }
+    .history-btn:hover {
         background:#2ea043;
         text-decoration:none;
         color:white;
+    }
+    .scanner-title {
+        color: #b107f5;
+        font-weight: 600;
     }
   </style>
 </head>
@@ -42,6 +59,11 @@
       <i class="fa-solid fa-gear"></i> Settings
   </a>
 
+  <!-- SETTINGS BUTTON -->
+  <a href="/history" class="history-btn">
+      <i class="fa-solid "></i> History
+  </a>
+
   <div class="container text-center">
     <h1 class="title mb-4">Cyber Security Analyzer</h1>
     <p class="mb-5">Upload a file or enter a URL to scan for threats</p>
@@ -51,7 +73,7 @@
       <!-- URL Scanner -->
       <div class="col-md-5">
         <div class="card p-4">
-          <h4><i class="fa-solid fa-globe"></i> URL Scanner</h4>
+          <h4 class="scanner-title" ><i class="fa-solid fa-globe"></i> URL Scanner</h4>
           <form action="/check_url" method="POST" class="mt-3">
             <input type="text" class="form-control mb-3" name="url" placeholder="Enter URL">
             <button class="btn btn-main w-100">Scan URL</button>
@@ -62,7 +84,7 @@
       <!-- File Scanner -->
       <div class="col-md-5">
         <div class="card p-4">
-          <h4><i class="fa-solid fa-file-shield"></i> File Scanner</h4>
+          <h4 class="scanner-title"><i class="fa-solid fa-file-shield"></i> File Scanner</h4>
           <form action="/upload_file" method="POST" enctype="multipart/form-data" class="mt-3">
             <input type="file" class="form-control mb-3" name="file">
             <button class="btn btn-main w-100">Scan File</button>
